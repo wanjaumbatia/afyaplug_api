@@ -30,7 +30,7 @@ import { Appointment } from './appointments/entities/appointment.entity';
     ScheduleModule.forRoot(),
     HttpModule,
     TypeOrmModule.forRoot({
-      // type: 'mysql',
+      type: 'mysql',
       // host: 'localhost',
       // port: 3306,
       // username: 'root',
