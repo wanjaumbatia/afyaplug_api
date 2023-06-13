@@ -1,0 +1,115 @@
+# Serialization
+
+import { Exclude } from 'class-transformer';
+
+export class UserEntity {
+  id: number;
+  firstName: string;
+  lastName: string;
+
+  @Exclude()
+  password: string;
+
+  constructor(partial: Partial<UserEntity>) {
+    Object.assign(this, partial);
+  }
+}
+
+
+# Scheduling
+
+import { Module } from '@nestjs/common';
+import { ScheduleModule } from '@nestjs/schedule';
+
+@Module({
+  imports: [
+    ScheduleModule.forRoot()
+  ],
+})
+export class AppModule {}
+
+import { Injectable, Logger } from '@nestjs/common';
+import { Cron } from '@nestjs/schedule';
+
+@Injectable()
+export class TasksService {
+  private readonly logger = new Logger(TasksService.name);
+
+  @Cron('45 * * * * *')
+  handleCron() {
+    this.logger.debug('Called when the current second is 45');
+  }
+
+  @Cron(CronExpression.EVERY_30_SECONDS)
+  handleCron() {
+    this.logger.debug('Called every 30 seconds');
+  }
+}
+
+* * * * * *
+| | | | | |
+| | | | | day of week
+| | | | months
+| | | day of month
+| | hours
+| minutes
+seconds (optional)
+
+
+# Events
+EventEmitterModule.forRoot({
+    // set this to `true` to use wildcards
+    wildcard: false,
+    // the delimiter used to segment namespaces
+    delimiter: '.',
+    // set this to `true` if you want to emit the newListener event
+    newListener: false,
+    // set this to `true` if you want to emit the removeListener event
+    removeListener: false,
+    // the maximum amount of listeners that can be assigned to an event
+    maxListeners: 10,
+    // show event name in memory leak message when more than maximum amount of listeners is assigned
+    verboseMemoryLeak: false,
+    // disable throwing uncaughtException if an error event is emitted and it has no listeners
+    ignoreErrors: false,
+  });
+
+  constructor(private eventEmitter: EventEmitter2) {}
+
+  this.eventEmitter.emit(
+    'order.created',
+    new OrderCreatedEvent({
+      orderId: 1,
+      payload: {},
+    }),
+  );
+
+  @OnEvent('order.created')
+handleOrderCreatedEvent(payload: OrderCreatedEvent) {
+  // handle and process "OrderCreatedEvent" event
+}
+
+@OnEvent('order.created', { async: true })
+handleOrderCreatedEvent(payload: OrderCreatedEvent) {
+  // handle and process "OrderCreatedEvent" event
+}
+
+
+# File Upload
+@Post('upload')
+@UseInterceptors(FileInterceptor('file'))
+uploadFile(@UploadedFile() file: Express.Multer.File) {
+  console.log(file);
+}
+  
+
+# Swagger
+
+const config = new DocumentBuilder()
+.setTitle('Cats example')
+.setDescription('The cats API description')
+.setVersion('1.0')
+.addTag('cats')
+.build();
+const document = SwaggerModule.createDocument(app, config);
+SwaggerModule.setup('api', app, document);
