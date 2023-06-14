@@ -75,7 +75,7 @@ export class AuthController {
     if (file == undefined || file == null) {
       throw new BadRequestException("Please provide a file");
     }
-    await this.authService.uploadProfileImage(file.originalname, file.buffer);
+    //await this.authService.uploadProfileImage(file.originalname, file.buffer);
   }
 
   @Post('forgot-password')

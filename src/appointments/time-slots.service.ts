@@ -12,7 +12,6 @@ export class TimeSlotService {
 
   private readonly logger = new Logger(TimeSlotService.name);
   constructor(
-    private readonly configSevice: ConfigService,
     private readonly personnelService: PersonelService,
     @InjectRepository(TimeSlot) private timeSlotRepository: Repository<TimeSlot>
   ) { };
@@ -37,9 +36,9 @@ export class TimeSlotService {
   //First 14 days create time slots
   @Cron(CronExpression.EVERY_10_HOURS)
   async getPersonelFromDoo() {
-    var start_time = this.configSevice.getOrThrow('TIMESLOTS_START_TIME')
-    var end_time = this.configSevice.getOrThrow('TIMESLOTS_END_TIME')
-    var slots_count = this.configSevice.getOrThrow('TIMESLOTS_COUNT_TIME');
+    var start_time = 7;
+    var end_time = 19;
+    var slots_count = 12;
     const slots = await this.timeSlotRepository.find();
     if (slots.length == 0) {
       var today = new Date();

@@ -13,15 +13,14 @@ import { PutObjectCommand, S3Client } from '@aws-sdk/client-s3';
 @Injectable()
 export class AuthService {
 
-  private readonly s3Client = new S3Client({
-    region: this.configSevice.getOrThrow('AWS_S3_REGION')
-  });
+  // private readonly s3Client = new S3Client({
+  //   region: this.configSevice.getOrThrow('AWS_S3_REGION')
+  // });
 
   constructor(
     private eventEmitter: EventEmitter2,
     private usersService: UsersService,
     private jwtService: JwtService,
-    private readonly configSevice: ConfigService
   ) { }
 
   async validateUser(email: string, password: string): Promise<any> {
@@ -116,13 +115,13 @@ export class AuthService {
     return this.usersService.resetPassword(token, newPassword);
   }
 
-  async uploadProfileImage(filename: string, file: Buffer) {
-    await this.s3Client.send(
-      new PutObjectCommand({
-        Bucket: 'afyaplug-files',
-        Key: filename,
-        Body: file
-      })
-    )
-  }
+  // async uploadProfileImage(filename: string, file: Buffer) {
+  //   await this.s3Client.send(
+  //     new PutObjectCommand({
+  //       Bucket: 'afyaplug-files',
+  //       Key: filename,
+  //       Body: file
+  //     })
+  //   )
+  // }
 }

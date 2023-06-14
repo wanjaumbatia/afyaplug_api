@@ -49,7 +49,7 @@ import { Appointment } from './appointments/entities/appointment.entity';
     //   limit: 120,
     // }),
     EventEmitterModule.forRoot(),
-    ConfigModule.forRoot({ isGlobal: true })
+    //ConfigModule.forRoot({ isGlobal: true })
   ],
   controllers: [],
   providers: [AppService,],
